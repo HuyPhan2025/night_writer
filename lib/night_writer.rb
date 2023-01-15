@@ -53,12 +53,16 @@ class NightWriter
     message = array_text.map do |letter|
       @braille_alphabets[letter]
     end   
-    braille_message = message.transpose.map do |array|
-      array.join
-    end.join("\n")
+
+    apply_to_rule = message.each_slice(40).map do |letter_40|
+      letter_40.transpose.map do |letter|
+        letter.join
+      end.join("\n")
+    end   
+    apply_to_rule.join("\n\n")
   end 
 end
 
 # require'pry';binding.pry
-night_writer = NightWriter.new
-night_writer.message_read_write
+# night_writer = NightWriter.new
+# night_writer.message_read_write
