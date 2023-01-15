@@ -55,7 +55,7 @@ class NightWriter
     end   
 
     apply_to_rule = message.each_slice(40).map do |letter_40|
-      letter_40.transpose.map do |letter|
+      letter_40.transpose.filter_map do |letter|
         letter.join
       end.join("\n")
     end   
