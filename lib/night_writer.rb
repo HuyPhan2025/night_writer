@@ -44,19 +44,21 @@ class NightWriter
 
     translated_text = translates_english_to_braille(english_text)
 
-    File.write(@write_file, english_text) 
+    File.write(@write_file, translated_text) 
   end  
 
   def translates_english_to_braille(english_text)
     array_text = english_text.split('')
 
-    array_text.flat_map do |letter|
+    message = array_text.map do |letter|
       @braille_alphabets[letter]
     end   
+    braille_message = message.transpose.map do |array|
+      array.join
+    end.join("\n")
   end 
 end
 
 # require'pry';binding.pry
-# require'pry';binding.pry
-# night_writer = NightWriter.new
-# night_writer.message_read_write
+night_writer = NightWriter.new
+night_writer.message_read_write

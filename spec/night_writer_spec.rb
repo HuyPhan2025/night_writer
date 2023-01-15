@@ -52,12 +52,6 @@ RSpec.describe NightWriter do
   end
   
   it 'translates english text into braille' do
-    expect(night_writer.translates_english_to_braille('z')).to eq(["0.", "0.", "00"])
+    expect(night_writer.translates_english_to_braille('z')).to eq("0.\n0.\n00")
   end
-
-
-
-
-
-
 end
