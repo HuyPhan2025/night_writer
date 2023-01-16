@@ -38,25 +38,63 @@ class LanguageTranslator
   end
 
   def translates_english_to_braille(english_text)
-    array_text = split_english_text(english_text)
-    # array_text = english_text.split('')
-    # require'pry';binding.pry
- 
+    message = letter_to_braille(english_text)
+
+    join_braille_arrays(message)
+  end 
+
+  def letter_to_braille(english_text)
+    array_text = english_text.split('')
     message = array_text.map do |letter|
       @braille_alphabets[letter]
     end   
+  end
 
-    apply_to_rule = message.each_slice(40).map do |letter_40|
+  def join_braille_arrays(arrays)
+    apply_to_rule = arrays.each_slice(40).map do |letter_40|
       letter_40.transpose.filter_map do |letter|
         letter.join
       end.join("\n")
     end   
     apply_to_rule.join("\n\n")
-  end 
-
-  def split_english_text(english_text)
-    english_text.split('')
   end
 
-  
+  def translates_braille_to_english(braille_text)
+    # array_text = braille_text.split("\n")
+    
+    # compact_array_texts = array_text.delete_if { |string| string == "" }
+    
+    # nested_array_braille = compact_array_texts.each_slice(3).map do |compact_array_text|
+    #   compact_array_text.map do |string|
+    #     string.scan(/../)
+    #   end
+    # end
+    nested_array_braille = braille_nested_array(braille_text)
+
+    braille_arrays = nested_array_braille.flat_map do |alphabet_text|
+      alphabet_text.transpose 
+    end
+
+    letters = braille_arrays.map do |array|
+      @braille_alphabets.key(array)
+    end.join
+    
+    forty_rule = letters.chars.each_slice(40).map do |letter|
+      letter.join     
+    end.join("\n")
+  end
+
+  def braille_nested_array(braille_text)
+    array_text = braille_text.split("\n")
+    
+    compact_array_texts = array_text.delete_if { |string| string == "" }
+    
+    nested_array_braille = compact_array_texts.each_slice(3).map do |compact_array_text|
+      compact_array_text.map do |string|
+        string.scan(/../)
+      end
+    end
+  end
+
+  # require'pry';binding.pry
 end

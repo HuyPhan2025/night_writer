@@ -56,8 +56,30 @@ RSpec.describe LanguageTranslator do
       expect(language_translator.translates_english_to_braille('the')).to eq(".0000.\n00....\n0.0.0.")
     end
 
-    it 'returns the message split up' do 
-      expect(language_translator.split_english_text('aaa')).to eq(["a", "a", "a"])
+    it 'returns braille from english text' do 
+      expect(language_translator.letter_to_braille("z")).to eq([["0.", "0.", "00"]])
+      expect(language_translator.letter_to_braille("abc")).to eq([["0.", "..", ".."], ["00", "..", ".."], ["0.", ".0", ".."]])
+
     end
+
+    it 'returns join braille arrays and transpose' do
+      arrays = [["0.", "..", ".."], ["00", "..", ".."], ["0.", ".0", ".."]]
+
+      expect(language_translator.join_braille_arrays(arrays)).to eq("0.000.\n.....0\n......")
+    end
+  end
+
+  describe '#translate braille to english' do
+    it 'returns braille from english' do
+      expect(language_translator.translates_braille_to_english("0.\n0.\n00")).to eq("z")
+      expect(language_translator.translates_braille_to_english("0.0.0.\n......\n......")).to eq("aaa")
+      expect(language_translator.translates_braille_to_english(".0000.\n00....\n0.0.0.")).to eq("the")
+    end
+
+    it 'returns nested array from braille text' do
+      expect(language_translator.braille_nested_array("0.\n0.\n00")).to eq([[["0."], ["0."], ["00"]]])
+    end
+
+
   end
 end
