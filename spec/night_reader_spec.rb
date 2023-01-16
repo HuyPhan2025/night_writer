@@ -51,4 +51,12 @@ RSpec.describe NightReader do
       }
     expect(night_reader.braille_alphabets).to eq(expected)
   end
+
+  it 'translates braille text into english' do
+    expect(night_reader.translates_braille_to_english("0.\n0.\n00")).to eq("z")
+    expect(night_reader.translates_braille_to_english("0.0.0.\n......\n......")).to eq("aaa")
+    expect(night_reader.translates_braille_to_english(".0000.\n00....\n0.0.0.")).to eq("the")
+  end
+
+
 end

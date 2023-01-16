@@ -2,12 +2,11 @@ require_relative 'spec_helper'
 
 RSpec.describe NightWriter do
   let(:night_writer) {NightWriter.new}
-
+  
   before do
     night_writer.read_file = './english_text.txt'
     night_writer.write_file = './braille_text.txt'
   end
-  
   it 'exists' do
     expect(night_writer).to be_a(NightWriter)
   end
