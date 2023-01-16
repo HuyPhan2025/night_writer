@@ -1,0 +1,3 @@
+class LanguageTranslator
+  
+end
