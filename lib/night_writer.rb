@@ -53,7 +53,6 @@ class NightWriter
     
     message = array_text.map do |letter|
       @braille_alphabets[letter]
-      # require'pry';binding.pry
     end   
 
     apply_to_rule = message.each_slice(40).map do |letter_40|
