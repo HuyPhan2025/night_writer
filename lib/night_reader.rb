@@ -1,4 +1,4 @@
-class NightWriter
+class NightReader
   attr_accessor :read_file,
                 :write_file,
                 :braille_alphabets
@@ -36,35 +36,41 @@ class NightWriter
       " " => ["..", "..", ".."]
     }
   end
-  
+
   def message_read_write
-    english_text = File.read(@read_file)
+    braille_text = File.read(@read_file)
     
-    puts "Created #{@write_file} containing #{english_text.split('').count} characters" 
+    puts "Created #{@write_file} containing #{braille_text.split('').count} characters" 
 
-    translated_text = translates_english_to_braille(english_text)
-
+    translated_text = translates_braille_to_english(braille_text)
+    
     File.write(@write_file, translated_text) 
   end  
-
-  def translates_english_to_braille(english_text)
-    array_text = english_text.split('')
-
+  
+  def translates_braille_to_english(braille_text)
+    array_text = braille_text.split("\n")
     
-    message = array_text.map do |letter|
-      @braille_alphabets[letter]
-      # require'pry';binding.pry
-    end   
+    compact_array_texts = array_text.delete_if { |string| string == "" }
+    
+    alphabet_texts = compact_array_texts.each_slice(3).map do |compact_array_text|
+      compact_array_text.map do |string|
+        string.scan(/../)
+      end
+    end
 
-    apply_to_rule = message.each_slice(40).map do |letter_40|
-      letter_40.transpose.filter_map do |letter|
-        letter.join
-      end.join("\n")
-    end   
-    apply_to_rule.join("\n\n")
-  end 
+    braille_arrays = alphabet_texts.flat_map do |alphabet_text|
+      alphabet_text.transpose 
+    end
+
+    letters = braille_arrays.map do |array|
+      @braille_alphabets.key(array)
+    end.join
+    
+    forty_rule = letters.chars.each_slice(40).map do |letter|
+      letter.join     
+    end.join("\n")
+  end
 end
 
-# require'pry';binding.pry
-# night_writer = NightWriter.new
-# night_writer.message_read_write
+# night_reader = NightReader.new
+# night_reader.message_read_write

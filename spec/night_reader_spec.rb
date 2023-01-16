@@ -1,24 +1,25 @@
 require_relative 'spec_helper'
 
-RSpec.describe NightWriter do
-  let(:night_writer) {NightWriter.new}
-  
+RSpec.describe NightReader do
+  let(:night_reader) {NightReader.new}
+
   before do
-    night_writer.read_file = './english_text.txt'
-    night_writer.write_file = './braille_text.txt'
+    night_reader.read_file = './braille_text.txt'
+    night_reader.write_file = './english_text.txt'
   end
+
   it 'exists' do
-    expect(night_writer).to be_a(NightWriter)
+    expect(night_reader).to be_a(NightReader)
   end
 
   it 'has attributes' do
-    night_writer.message_read_write
-
-    expect(night_writer.read_file).to eq('./english_text.txt')
-    expect(night_writer.write_file).to eq('./braille_text.txt')
+    night_reader.message_read_write
+  
+    expect(night_reader.read_file).to eq('./braille_text.txt')
+    expect(night_reader.write_file).to eq('./english_text.txt')
   end
 
-  it 'has alphabet to braille dictionary' do
+  it 'has a braille to alphabet dictionary' do
     expected = {
       "a" => ["0.", "..", ".."],
       "b" => ["00", "..", ".."],
@@ -48,13 +49,14 @@ RSpec.describe NightWriter do
       "z" => ["0.", "0.", "00"],
       " " => ["..", "..", ".."]
       }
+    expect(night_reader.braille_alphabets).to eq(expected)
+  end
 
-    expect(night_writer.braille_alphabets).to eq(expected)
+  it 'translates braille text into english' do
+    expect(night_reader.translates_braille_to_english("0.\n0.\n00")).to eq("z")
+    expect(night_reader.translates_braille_to_english("0.0.0.\n......\n......")).to eq("aaa")
+    expect(night_reader.translates_braille_to_english(".0000.\n00....\n0.0.0.")).to eq("the")
   end
-  
-  it 'translates english text into braille' do
-    expect(night_writer.translates_english_to_braille('z')).to eq("0.\n0.\n00")
-    expect(night_writer.translates_english_to_braille('aaa')).to eq("0.0.0.\n......\n......")
-    expect(night_writer.translates_english_to_braille('the')).to eq(".0000.\n00....\n0.0.0.")
-  end
+
+
 end
