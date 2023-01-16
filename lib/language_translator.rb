@@ -38,9 +38,10 @@ class LanguageTranslator
   end
 
   def translates_english_to_braille(english_text)
-    array_text = english_text.split('')
-
-    
+    array_text = split_english_text(english_text)
+    # array_text = english_text.split('')
+    # require'pry';binding.pry
+ 
     message = array_text.map do |letter|
       @braille_alphabets[letter]
     end   
@@ -52,4 +53,10 @@ class LanguageTranslator
     end   
     apply_to_rule.join("\n\n")
   end 
+
+  def split_english_text(english_text)
+    english_text.split('')
+  end
+
+  
 end

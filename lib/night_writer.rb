@@ -49,7 +49,6 @@ class NightWriter
 
   def translates_english_to_braille(english_text)
     array_text = english_text.split('')
-
     
     message = array_text.map do |letter|
       @braille_alphabets[letter]

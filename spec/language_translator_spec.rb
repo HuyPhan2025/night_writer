@@ -51,9 +51,13 @@ RSpec.describe LanguageTranslator do
 
   describe "#translate english to braille" do
     it 'returns translated braille' do
-      expect(night_writer.translates_english_to_braille('z')).to eq("0.\n0.\n00")
-      expect(night_writer.translates_english_to_braille('aaa')).to eq("0.0.0.\n......\n......")
-      expect(night_writer.translates_english_to_braille('the')).to eq(".0000.\n00....\n0.0.0.")
+      expect(language_translator.translates_english_to_braille('z')).to eq("0.\n0.\n00")
+      expect(language_translator.translates_english_to_braille('aaa')).to eq("0.0.0.\n......\n......")
+      expect(language_translator.translates_english_to_braille('the')).to eq(".0000.\n00....\n0.0.0.")
+    end
+
+    it 'returns the message split up' do 
+      expect(language_translator.split_english_text('aaa')).to eq(["a", "a", "a"])
     end
   end
 end
