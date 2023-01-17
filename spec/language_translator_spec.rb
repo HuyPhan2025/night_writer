@@ -3,13 +3,6 @@ require_relative 'spec_helper'
 RSpec.describe LanguageTranslator do
   let(:language_translator) {LanguageTranslator.new}
 
-  # before do
-  #   language_translator.read_file = './english_text.txt'
-  #   language_translator.write_file = './braille_text.txt'
-  #   language_translator.read_file = './braille_text.txt'
-  #   language_translator.write_file = './english_text.txt'
-  # end
-
   describe '#initialize' do
     it "exists" do
       expect(language_translator).to be_instance_of(LanguageTranslator)
@@ -59,7 +52,6 @@ RSpec.describe LanguageTranslator do
     it 'returns braille from english text' do 
       expect(language_translator.letter_to_braille("z")).to eq([["0.", "0.", "00"]])
       expect(language_translator.letter_to_braille("abc")).to eq([["0.", "..", ".."], ["00", "..", ".."], ["0.", ".0", ".."]])
-
     end
 
     it 'returns join braille arrays and transpose' do
@@ -87,6 +79,5 @@ RSpec.describe LanguageTranslator do
     it 'returns the letter from braille text' do
       expect(language_translator.letter_from_braille([["0.", "0.", "00"]])).to eq("z")
     end
-
   end
 end

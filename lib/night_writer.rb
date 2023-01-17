@@ -11,6 +11,7 @@ class NightWriter < LanguageTranslator
 
     File.write(@write_file, translated_text) 
   end  
+
 end
 # night_writer = NightWriter.new
 # night_writer.message_read_write

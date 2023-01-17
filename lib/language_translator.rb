@@ -41,7 +41,6 @@ class LanguageTranslator
 
   def translates_english_to_braille(english_text)
     message = letter_to_braille(english_text)
-
     join_braille_arrays(message)
   end 
 
@@ -50,7 +49,6 @@ class LanguageTranslator
     message = array_text.filter_map do |letter|
       @braille_alphabets[letter]
     end   
-    # require'pry';binding.pry
   end
   
   def join_braille_arrays(message)    
@@ -95,8 +93,4 @@ class LanguageTranslator
       @braille_alphabets.key(array)
     end.join
   end
-  
-  
-  
-  # require'pry';binding.pry
 end
