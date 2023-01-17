@@ -45,7 +45,7 @@ class LanguageTranslator
   end 
 
   def letter_to_braille(english_text)
-    array_text = english_text.split('')
+    array_text = english_text.downcase.split('')
     message = array_text.filter_map do |letter|
       @braille_alphabets[letter]
     end   
