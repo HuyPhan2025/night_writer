@@ -21,7 +21,7 @@ class LanguageTranslator
       "j" => [".0", ".0", "0."],
       "k" => ["0.", "0.", ".."],
       "l" => ["00", "0.", ".."],
-      "m" => ["0.", "00", ".."],
+      "m" => ["00", "..", "0."],
       "n" => ["0.", "00", "0."],
       "o" => ["0.", "0.", "0."],
       "p" => ["00", "00", ".."],
@@ -45,7 +45,7 @@ class LanguageTranslator
   end 
 
   def letter_to_braille(english_text)
-    array_text = english_text.split('')
+    array_text = english_text.downcase.split('')
     message = array_text.filter_map do |letter|
       @braille_alphabets[letter]
     end   
