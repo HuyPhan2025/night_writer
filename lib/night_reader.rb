@@ -49,29 +49,30 @@ class NightReader < LanguageTranslator
     File.write(@write_file, translated_text) 
   end  
   
-  # def translates_braille_to_english(braille_text)
-  #   array_text = braille_text.split("\n")
+  def translates_braille_to_english(braille_text)
+    array_text = braille_text.split("\n")
     
-  #   compact_array_texts = array_text.delete_if { |string| string == "" }
+    compact_array_texts = array_text.delete_if { |string| string == "" }
     
-  #   alphabet_texts = compact_array_texts.each_slice(3).map do |compact_array_text|
-  #     compact_array_text.map do |string|
-  #       string.scan(/../)
-  #     end
-  #   end
+    alphabet_texts = compact_array_texts.each_slice(3).map do |compact_array_text|
+      compact_array_text.map do |string|
+        string.scan(/../)
+      end
+    end
+    # require'pry';binding.pry
 
-  #   braille_arrays = alphabet_texts.flat_map do |alphabet_text|
-  #     alphabet_text.transpose 
-  #   end
+    braille_arrays = alphabet_texts.flat_map do |alphabet_text|
+      alphabet_text.transpose 
+    end
 
-  #   letters = braille_arrays.map do |array|
-  #     @braille_alphabets.key(array)
-  #   end.join
+    letters = braille_arrays.map do |array|
+      @braille_alphabets.key(array)
+    end.join
     
-  #   forty_rule = letters.chars.each_slice(40).map do |letter|
-  #     letter.join     
-  #   end.join("\n")
-  # end
+    forty_rule = letters.chars.each_slice(40).map do |letter|
+      letter.join     
+    end.join("\n")
+  end
 end
 
 # night_reader = NightReader.new

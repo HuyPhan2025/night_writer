@@ -47,21 +47,18 @@ class LanguageTranslator
 
   def letter_to_braille(english_text)
     array_text = english_text.split('')
-    message = array_text.map do |letter|
+    message = array_text.filter_map do |letter|
       @braille_alphabets[letter]
     end   
+    # require'pry';binding.pry
   end
   
-  def join_braille_arrays(arrays)
-    
-    apply_to_rule = arrays.each_slice(40).map do |letter_40|
-    require'pry';binding.pry
+  def join_braille_arrays(message)    
+    apply_to_rule = message.each_slice(40).map do |letter_40|
       letter_40.transpose.filter_map do |letter|
         letter.join
       end.join("\n")
-    end   
-    require'pry';binding.pry
-    apply_to_rule.join("\n\n")
+    end.join("\n\n")   
   end
 
   def translates_braille_to_english(braille_text)
