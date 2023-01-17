@@ -61,6 +61,7 @@ class LanguageTranslator
 
   def translates_braille_to_english(braille_text)
     nested = braille_nested_array(braille_text)
+
     braille_join = join_braille_text(nested)
  
     letters = letter_from_braille(braille_join)
@@ -73,24 +74,24 @@ class LanguageTranslator
   def braille_nested_array(braille_text)
     array_text = braille_text.split("\n")
     
-    compact_array_texts = array_text.delete_if { |string| string == "" }
+    compact_array_braille = array_text.delete_if { |string| string == "" }
     
-    nested_array_braille = compact_array_texts.each_slice(3).map do |compact_array_text|
-      compact_array_text.map do |string|
+    compact_array_braille.each_slice(3).map do |compact_array_braille|
+      compact_array_braille.map do |string|
         string.scan(/../)
       end
     end
   end
   
   def join_braille_text(nested)
-    braille_arrays = nested.flat_map do |alphabet_text|
+    nested.flat_map do |alphabet_text|
       alphabet_text.transpose 
     end
   end
 
   def letter_from_braille(braille)   
-    letters = braille.map do |array|
-      @braille_alphabets.key(array)
+    braille.map do |braille_array|
+      @braille_alphabets.key(braille_array)
     end.join
   end
 end

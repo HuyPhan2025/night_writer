@@ -12,6 +12,5 @@ class NightReader < LanguageTranslator
     File.write(@write_file, translated_text) 
   end  
 end
-
-# night_reader = NightReader.new
-# night_reader.message_read_write
+night_reader = NightReader.new
+night_reader.message_read_write
