@@ -80,6 +80,13 @@ RSpec.describe LanguageTranslator do
       expect(language_translator.braille_nested_array("0.\n0.\n00")).to eq([[["0."], ["0."], ["00"]]])
     end
 
+    it 'returns join braille test into array' do
+      expect(language_translator.join_braille_text([[["0."], ["0."], ["00"]]])).to eq([["0.", "0.", "00"]])
+    end
+
+    it 'returns the letter from braille text' do
+      
+    end
 
   end
 end

@@ -1,7 +1,9 @@
 class LanguageTranslator
+
   attr_accessor :read_file, 
-                :write_file, 
-                :braille_alphabets
+                :write_file 
+
+  attr_reader :braille_alphabets
   
   def initialize
     @read_file = ARGV[0]
@@ -60,6 +62,8 @@ class LanguageTranslator
   end
 
   def translates_braille_to_english(braille_text)
+    nested = braille_nested_array(braille_text)
+    braille_join = join_braille_text(nested)
     # array_text = braille_text.split("\n")
     
     # compact_array_texts = array_text.delete_if { |string| string == "" }
@@ -69,13 +73,14 @@ class LanguageTranslator
     #     string.scan(/../)
     #   end
     # end
-    nested_array_braille = braille_nested_array(braille_text)
+    # nested_array_braille = braille_nested_array(braille_text)
 
-    braille_arrays = nested_array_braille.flat_map do |alphabet_text|
-      alphabet_text.transpose 
-    end
+    # braille_arrays = nested_array_braille.flat_map do |alphabet_text|
+    #   alphabet_text.transpose 
+    # end
 
-    letters = braille_arrays.map do |array|
+
+    letters = braille_join.map do |array|
       @braille_alphabets.key(array)
     end.join
     
@@ -95,6 +100,14 @@ class LanguageTranslator
       end
     end
   end
-
+  
+  def join_braille_text(nested)
+    braille_arrays = nested.flat_map do |alphabet_text|
+      alphabet_text.transpose 
+    end
+  end
+  
+  
+  
   # require'pry';binding.pry
 end

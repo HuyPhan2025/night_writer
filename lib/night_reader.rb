@@ -1,7 +1,9 @@
-class NightReader 
-  attr_accessor :read_file,
-                :write_file,
-                :braille_alphabets
+require_relative 'language_translator'
+
+class NightReader < LanguageTranslator
+  # attr_accessor :read_file,
+  #               :write_file,
+  #               :braille_alphabets
 
   # def initialize
   #   @read_file = ARGV[0]
