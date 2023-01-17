@@ -3,12 +3,12 @@ require_relative 'spec_helper'
 RSpec.describe LanguageTranslator do
   let(:language_translator) {LanguageTranslator.new}
 
-  before do
-    language_translator.read_file = './english_text.txt'
-    language_translator.write_file = './braille_text.txt'
-    language_translator.read_file = './braille_text.txt'
-    language_translator.write_file = './english_text.txt'
-  end
+  # before do
+  #   language_translator.read_file = './english_text.txt'
+  #   language_translator.write_file = './braille_text.txt'
+  #   language_translator.read_file = './braille_text.txt'
+  #   language_translator.write_file = './english_text.txt'
+  # end
 
   describe '#initialize' do
     it "exists" do
@@ -24,7 +24,7 @@ RSpec.describe LanguageTranslator do
       "e" => ["0.", "..", "0."],
       "f" => ["00", ".0", ".."],
       "g" => ["00", ".0", "0."],
-      "h" => ["00", "..", "0."],
+      "h" => ["0.", "00", ".."],
       "i" => [".0", ".0", ".."],
       "j" => [".0", ".0", "0."],
       "k" => ["0.", "0.", ".."],
@@ -53,7 +53,7 @@ RSpec.describe LanguageTranslator do
     it 'returns translated braille' do
       expect(language_translator.translates_english_to_braille('z')).to eq("0.\n0.\n00")
       expect(language_translator.translates_english_to_braille('aaa')).to eq("0.0.0.\n......\n......")
-      expect(language_translator.translates_english_to_braille('the')).to eq(".0000.\n00....\n0.0.0.")
+      expect(language_translator.translates_english_to_braille('the')).to eq(".00.0.\n0000..\n0...0.")
     end
 
     it 'returns braille from english text' do 
@@ -73,19 +73,19 @@ RSpec.describe LanguageTranslator do
     it 'returns braille from english' do
       expect(language_translator.translates_braille_to_english("0.\n0.\n00")).to eq("z")
       expect(language_translator.translates_braille_to_english("0.0.0.\n......\n......")).to eq("aaa")
-      expect(language_translator.translates_braille_to_english(".0000.\n00....\n0.0.0.")).to eq("the")
+      expect(language_translator.translates_braille_to_english(".00.0.\n0000..\n0...0.")).to eq("the")
     end
 
     it 'returns nested array from braille text' do
       expect(language_translator.braille_nested_array("0.\n0.\n00")).to eq([[["0."], ["0."], ["00"]]])
     end
 
-    it 'returns join braille test into array' do
+    it 'returns join braille into array' do
       expect(language_translator.join_braille_text([[["0."], ["0."], ["00"]]])).to eq([["0.", "0.", "00"]])
     end
 
     it 'returns the letter from braille text' do
-      
+      expect(language_translator.letter_from_braille([["0.", "0.", "00"]])).to eq("z")
     end
 
   end

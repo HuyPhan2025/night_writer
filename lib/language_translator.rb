@@ -16,7 +16,7 @@ class LanguageTranslator
       "e" => ["0.", "..", "0."],
       "f" => ["00", ".0", ".."],
       "g" => ["00", ".0", "0."],
-      "h" => ["00", "..", "0."],
+      "h" => ["0.", "00", ".."],
       "i" => [".0", ".0", ".."],
       "j" => [".0", ".0", "0."],
       "k" => ["0.", "0.", ".."],
@@ -51,38 +51,24 @@ class LanguageTranslator
       @braille_alphabets[letter]
     end   
   end
-
+  
   def join_braille_arrays(arrays)
+    
     apply_to_rule = arrays.each_slice(40).map do |letter_40|
+    require'pry';binding.pry
       letter_40.transpose.filter_map do |letter|
         letter.join
       end.join("\n")
     end   
+    require'pry';binding.pry
     apply_to_rule.join("\n\n")
   end
 
   def translates_braille_to_english(braille_text)
     nested = braille_nested_array(braille_text)
     braille_join = join_braille_text(nested)
-    # array_text = braille_text.split("\n")
-    
-    # compact_array_texts = array_text.delete_if { |string| string == "" }
-    
-    # nested_array_braille = compact_array_texts.each_slice(3).map do |compact_array_text|
-    #   compact_array_text.map do |string|
-    #     string.scan(/../)
-    #   end
-    # end
-    # nested_array_braille = braille_nested_array(braille_text)
-
-    # braille_arrays = nested_array_braille.flat_map do |alphabet_text|
-    #   alphabet_text.transpose 
-    # end
-
-
-    letters = braille_join.map do |array|
-      @braille_alphabets.key(array)
-    end.join
+ 
+    letters = letter_from_braille(braille_join)
     
     forty_rule = letters.chars.each_slice(40).map do |letter|
       letter.join     
@@ -105,6 +91,12 @@ class LanguageTranslator
     braille_arrays = nested.flat_map do |alphabet_text|
       alphabet_text.transpose 
     end
+  end
+
+  def letter_from_braille(braille)   
+    letters = braille.map do |array|
+      @braille_alphabets.key(array)
+    end.join
   end
   
   
